@@ -1,34 +1,56 @@
 import csv
-def op3():
-    f = open("ejercicio3_sin_lineas.txt", "x")
-    with open('ejercicio3.txt', 'r', encoding='utf-8') as fichero:
-        lineas = fichero.readlines()
-    for i in lineas:
-        print(i.strip())
-        if i != "\n" and i != " ":
-            f.write(i)
+def op3(arreglo):
+    print("Arreglo:",arreglo)
+    for i in range(len(arreglo) - 1):        # <-- bucle padre
+        menor = i # primer elemento por default será el mínimo
+
+        for j in range(i + 1, len(arreglo)): # <-- bucle hijo
+            if arreglo[j] < arreglo[menor]:
+                menor = j
+
+        if menor != i:
+            arreglo[menor], arreglo[i] = arreglo[i], arreglo[menor]
+    print("Arreglo Odenado:",arreglo)
     
-def op2():
-    with open('ejercicio2.csv', 'r', encoding='utf-8') as fichero:
-        lector = csv.DictReader(fichero)  
-        datos = [fila for fila in lector]
-    for fila in datos:
-        print(fila)  
-    return datos 
+def op2(lista, _buscado):
+    tamano_lista = len(lista)
+    for actual in range(0, tamano_lista):
+        print("actual,",actual,"/lista[actual],",lista[actual],"/_buscado,",_buscado)
+
+        if (lista[actual] == _buscado):
+            print("\n\t¡Encontrado!\n")
+            return actual
+
+    return -1
 
 def op1():
-    with open('ejercicio1.txt', 'r', encoding='utf-8') as fichero:
-        contenido = fichero.readlines()  # Lee todas las líneas del archivo
+    lista_numeros = [64, 34, 25, 12, 22, 11, 90]
+    print("Lista:",lista_numeros) 
+    bubble_sort(lista_numeros)
+    print("quick_sort",quick_sort(lista_numeros))
+def bubble_sort(lista_numeros):
+    arr = lista_numeros
+    # Outer loop to iterate through the list n times
+    for n in range(len(arr) - 1, 0, -1):
 
-    # Contar líneas, palabras y caracteres
-    num_lineas = len(contenido)
-    num_palabras = sum(len(linea.split()) for linea in contenido)
-    num_caracteres = sum(len(linea) for linea in contenido)
+        # Inner loop to compare adjacent elements
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
 
-    # Mostrar los resultados
-    print(f"Número de líneas: {num_lineas}")
-    print(f"Número de palabras: {num_palabras}")
-    print(f"Número de caracteres: {num_caracteres}")
+                # Swap elements if they are in the wrong order
+                swapped = True
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+    print("bubble_sort",arr)
+def quick_sort(lista_numeros):
+    arr = lista_numeros
+    if len(arr) <= 1:
+        return arr
+    else:
+        pivot = arr[len(arr) // 2]
+        left = [x for x in arr if x < pivot]
+        middle = [x for x in arr if x == pivot]
+        right = [x for x in arr if x > pivot]
+        return quick_sort(left) + middle + quick_sort(right)
 
 def main():
     while True:
@@ -47,10 +69,12 @@ def main():
         if op == 1:
             op1()
         elif op == 2:
-            op2()
+            lista  = [0,1,2,3,4,5,6,7,8,9]
+            numB =  int(input("ingrese el numero a buscar:"))
+            print("Esta en la posicion Nº",op2(lista,numB)," de la lista")
         elif op == 3:
-            # Asegúrate de tener la función op3 implementada
-            op3()
+            a = [22, 25, 12, 64, 11]
+            op3(a)
         elif op == 7:
             print("Adios ;)")
             break  # Salir del bucle y del programa
