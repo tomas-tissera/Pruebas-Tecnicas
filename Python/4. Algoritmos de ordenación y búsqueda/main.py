@@ -59,12 +59,11 @@ def main():
         print("3. Crea una función que utilice el algoritmo de **ordenación por inserción** para ordenar una lista de palabras alfabéticamente.")
         print("7. Salir")
         
-        # Solicitar una nueva opción en cada iteración del bucle
         try:
             op = int(input("Ingrese una opción:\n\t-> "))
         except ValueError:
             print("Por favor, ingrese un número válido.")
-            continue  # Volver al inicio del bucle si la entrada no es válida
+            continue 
 
         if op == 1:
             op1()
@@ -77,7 +76,7 @@ def main():
             op3(a)
         elif op == 7:
             print("Adios ;)")
-            break  # Salir del bucle y del programa
+            break  
         else:
             print("Opción no válida. Intente de nuevo.")
 
