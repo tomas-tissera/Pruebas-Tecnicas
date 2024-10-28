@@ -84,7 +84,7 @@ def op2(b1):
     if opcion == 0:
         print(b1)  
     elif opcion == 1:
-        # Incrementar el salario
+        
         try:
             cantidad = float(input("Ingrese la cantidad a incrementar -> $"))
             b1.depositar(cantidad)
@@ -93,7 +93,7 @@ def op2(b1):
             print("Por favor, ingrese un número válido.")
         
     elif opcion == 2:
-            # Retirar del salario
+            
         try:
             cantidad = float(input("Ingrese la cantidad a retirar -> $"))
             b1.retirar(cantidad)
@@ -119,7 +119,7 @@ def op1(p1):
     
     op1_1 = int(input("Desea modificar el Salario?(1=Sí, 0=No)\n\t->"))
     if op1_1 == 1:
-        # Solicitar el nuevo monto del salario
+        
         try:
             cantidad = float(input("Ingrese la cantidad a incrementar -> $"))
             p1.incrementar_salario(cantidad)
