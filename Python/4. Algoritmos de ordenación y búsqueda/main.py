@@ -1,84 +1,80 @@
-import csv
-def op3(arreglo):
-    print("Arreglo:",arreglo)
-    for i in range(len(arreglo) - 1):        # <-- bucle padre
-        menor = i # primer elemento por default será el mínimo
+def bubble_sort(lista):
+    n = len(lista)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if lista[j] > lista[j + 1]:
+                lista[j], lista[j + 1] = lista[j + 1], lista[j]
+    return lista
 
-        for j in range(i + 1, len(arreglo)): # <-- bucle hijo
-            if arreglo[j] < arreglo[menor]:
-                menor = j
+def quick_sort(lista):
+    if len(lista) <= 1:
+        return lista
+    else:
+        pivote = lista[0]
+        menores = [x for x in lista[1:] if x <= pivote]
+        mayores = [x for x in lista[1:] if x > pivote]
+        return quick_sort(menores) + [pivote] + quick_sort(mayores)
 
-        if menor != i:
-            arreglo[menor], arreglo[i] = arreglo[i], arreglo[menor]
-    print("Arreglo Odenado:",arreglo)
-    
-def op2(lista, _buscado):
-    tamano_lista = len(lista)
-    for actual in range(0, tamano_lista):
-        print("actual,",actual,"/lista[actual],",lista[actual],"/_buscado,",_buscado)
-
-        if (lista[actual] == _buscado):
-            print("\n\t¡Encontrado!\n")
-            return actual
-
+def busqueda_binaria(lista, objetivo):
+    izquierda, derecha = 0, len(lista) - 1
+    while izquierda <= derecha:
+        medio = (izquierda + derecha) // 2
+        if lista[medio] == objetivo:
+            return medio
+        elif lista[medio] < objetivo:
+            izquierda = medio + 1
+        else:
+            derecha = medio - 1
     return -1
 
-def op1():
-    lista_numeros = [64, 34, 25, 12, 22, 11, 90]
-    print("Lista:",lista_numeros) 
-    bubble_sort(lista_numeros)
-    print("quick_sort",quick_sort(lista_numeros))
-def bubble_sort(lista_numeros):
-    arr = lista_numeros
-    # Outer loop to iterate through the list n times
-    for n in range(len(arr) - 1, 0, -1):
-
-        # Inner loop to compare adjacent elements
-        for i in range(n):
-            if arr[i] > arr[i + 1]:
-
-                # Swap elements if they are in the wrong order
-                swapped = True
-                arr[i], arr[i + 1] = arr[i + 1], arr[i]
-    print("bubble_sort",arr)
-def quick_sort(lista_numeros):
-    arr = lista_numeros
-    if len(arr) <= 1:
-        return arr
-    else:
-        pivot = arr[len(arr) // 2]
-        left = [x for x in arr if x < pivot]
-        middle = [x for x in arr if x == pivot]
-        right = [x for x in arr if x > pivot]
-        return quick_sort(left) + middle + quick_sort(right)
+def ordenacion_por_insercion(lista):
+    for i in range(1, len(lista)):
+        clave = lista[i]
+        j = i - 1
+        while j >= 0 and lista[j] > clave:
+            lista[j + 1] = lista[j]
+            j -= 1
+        lista[j + 1] = clave
+    return lista
 
 def main():
     while True:
-        print("\n\n1. Implementa el algoritmo **bubble sort** y **quick sort** para ordenar una lista de números.")
-        print("2. Escribe una función que implemente **búsqueda binaria** para encontrar un número en una lista ordenada.")
-        print("3. Crea una función que utilice el algoritmo de **ordenación por inserción** para ordenar una lista de palabras alfabéticamente.")
-        print("7. Salir")
-        
-        try:
-            op = int(input("Ingrese una opción:\n\t-> "))
-        except ValueError:
-            print("Por favor, ingrese un número válido.")
-            continue 
+        print("\nMenú:")
+        print("1. Ordenar lista con Bubble Sort")
+        print("2. Ordenar lista con Quick Sort")
+        print("3. Realizar búsqueda binaria")
+        print("4. Ordenar palabras alfabéticamente con Ordenación por Inserción")
+        print("5. Salir")
 
-        if op == 1:
-            op1()
-        elif op == 2:
-            lista  = [0,1,2,3,4,5,6,7,8,9]
-            numB =  int(input("ingrese el numero a buscar:"))
-            print("Esta en la posicion Nº",op2(lista,numB)," de la lista")
-        elif op == 3:
-            a = [22, 25, 12, 64, 11]
-            op3(a)
-        elif op == 7:
-            print("Adios ;)")
-            break  
+        opcion = input("Elige una opción (1-5): ")
+
+        if opcion == '1':
+            numeros = list(map(int, input("Ingresa números separados por espacios: ").split()))
+            print("Lista original:", numeros)
+            print("Lista ordenada (Bubble Sort):", bubble_sort(numeros))
+
+        elif opcion == '2':
+            numeros = list(map(int, input("Ingresa números separados por espacios: ").split()))
+            print("Lista original:", numeros)
+            print("Lista ordenada (Quick Sort):", quick_sort(numeros))
+
+        elif opcion == '3':
+            numeros_ordenados = list(map(int, input("Ingresa números ordenados separados por espacios: ").split()))
+            objetivo = int(input("Ingresa el número a buscar: "))
+            indice = busqueda_binaria(numeros_ordenados, objetivo)
+            print(f"Búsqueda Binaria: Elemento {objetivo} {'encontrado en índice ' + str(indice) if indice != -1 else 'no encontrado'}")
+
+        elif opcion == '4':
+            palabras = input("Ingresa palabras separadas por espacios: ").split()
+            print("Lista original:", palabras)
+            print("Lista ordenada (Ordenación por Inserción):", ordenacion_por_insercion(palabras))
+
+        elif opcion == '5':
+            print("Saliendo del programa.")
+            break
+
         else:
-            print("Opción no válida. Intente de nuevo.")
+            print("Opción no válida. Por favor, elige una opción del menú.")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
