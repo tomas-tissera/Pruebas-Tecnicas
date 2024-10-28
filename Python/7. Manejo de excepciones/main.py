@@ -1,6 +1,7 @@
 def op3(lista):
     while True:
         try:
+            # Solicitar al usuario un índice para acceder a la lista
             indice = int(input("\tIngrese el índice del elemento al que desea acceder: "))
             return lista[indice]
         except ValueError:
@@ -10,24 +11,26 @@ def op3(lista):
 
 def op2(nombre_archivo):
     try:
+        # Abrir y leer el archivo
         with open(nombre_archivo, 'r') as archivo:
             contenido = archivo.read()
             print(contenido)
     except FileNotFoundError:
         print(f"Error: El archivo '{nombre_archivo}' no existe.")
 
-def op1(n1,n2):
-    if n2 == 0:
-        print("\nERROR no se puede dividir en 0")
-    else:
-        print(n1/n2)
-    
-def main():
+def op1(n1, n2):
+    # Manejar la división y verificar la división por cero
+    try:
+        resultado = n1 / n2
+        print(f"El resultado de la división es: {resultado}")
+    except ZeroDivisionError:
+        print("\nERROR: No se puede dividir entre cero.")
 
+def main():
     while True:
-        print("\n\n1.Escribe un programa que solicite al usuario dos números, los divida, y maneje la excepción de división por cero.")
-        print("2. Crea una función que lea un archivo y maneje la excepción en caso de que el archivo no exista.")
-        print("3. Escribe un script que maneje una lista de números, solicitando al usuario un índice, y maneje la excepción de índice fuera de rango.")
+        print("\n\n1. Solicitar al usuario dos números, dividirlos y manejar la excepción de división por cero.")
+        print("2. Leer un archivo y manejar la excepción en caso de que el archivo no exista.")
+        print("3. Manejar una lista de números, solicitando al usuario un índice, y manejar la excepción de índice fuera de rango.")
         print("7. Salir")
         
         try:
@@ -37,18 +40,20 @@ def main():
             continue 
 
         if op == 1:
-            
-            n1 = int(input("Ingrese el 1er numero: "))
-            n2 = int(input("Ingrese el 2do numero: "))
-            op1(n1,n2)
+            try:
+                n1 = int(input("Ingrese el 1er número: "))
+                n2 = int(input("Ingrese el 2do número: "))
+                op1(n1, n2)
+            except ValueError:
+                print("Por favor, ingrese solo números enteros.")
         elif op == 2:
-            nombre = str(input("Ingresa el nombre del arhivo con su terminacion (.bat-.csv-.txt):\n->"))
+            nombre = input("Ingresa el nombre del archivo con su extensión (.bat, .csv, .txt):\n-> ")
             op2(nombre)
         elif op == 3:
             mi_lista = [10, 20, 30, 40]
-            print("\t\t->",op3(mi_lista))
+            print("\t\t->", op3(mi_lista))
         elif op == 7:
-            print("Adios ;)")
+            print("Adiós ;)")
             break  
         else:
             print("Opción no válida. Intente de nuevo.")

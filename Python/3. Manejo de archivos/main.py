@@ -1,20 +1,27 @@
 import csv
+
 def op3():
-    f = open("ejercicio3_sin_lineas.txt", "x")
-    with open('ejercicio3.txt', 'r', encoding='utf-8') as fichero:
-        lineas = fichero.readlines()
-    for i in lineas:
-        print(i.strip())
-        if i != "\n" and i != " ":
-            f.write(i)
-    
+    # Crear un nuevo archivo solo si no existe, de lo contrario, se manejan las excepciones
+    try:
+        with open("ejercicio3_sin_lineas.txt", "x") as f:
+            with open('ejercicio3.txt', 'r', encoding='utf-8') as fichero:
+                lineas = fichero.readlines()
+                for i in lineas:
+                    if i.strip():  # Eliminar líneas en blanco
+                        f.write(i)
+                        print(i.strip())  # Mostrar líneas no vacías
+    except FileExistsError:
+        print("El archivo 'ejercicio3_sin_lineas.txt' ya existe.")
+
 def op2():
     with open('ejercicio2.csv', 'r', encoding='utf-8') as fichero:
         lector = csv.DictReader(fichero)  
         datos = [fila for fila in lector]
+    
     for fila in datos:
-        print(fila)  
-    return datos 
+        print(fila)
+    
+    return datos
 
 def op1():
     with open('ejercicio1.txt', 'r', encoding='utf-8') as fichero:
@@ -46,10 +53,9 @@ def main():
         elif op == 2:
             op2()
         elif op == 3:
-            
             op3()
         elif op == 7:
-            print("Adios ;)")
+            print("Adiós ;)")
             break  
         else:
             print("Opción no válida. Intente de nuevo.")

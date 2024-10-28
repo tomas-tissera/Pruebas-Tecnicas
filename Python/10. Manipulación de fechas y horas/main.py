@@ -2,31 +2,23 @@ from datetime import datetime, timedelta
 import pytz
 
 def op3(fecha_inicio_str, fecha_fin_str):
-   
     formato = "%d/%m/%Y"
     
     try:
-       
         fecha_inicio = datetime.strptime(fecha_inicio_str, formato)
         fecha_fin = datetime.strptime(fecha_fin_str, formato)
 
-       
         if fecha_inicio > fecha_fin:
-            print("La fecha de inicio debe ser anterior a la fecha de fin.")
+            print("Error: La fecha de inicio debe ser anterior a la fecha de fin.")
             return
 
-       
         lunes = []
 
-       
         while fecha_inicio <= fecha_fin:
-           
-            if fecha_inicio.weekday() == 0:
+            if fecha_inicio.weekday() == 0:  # 0 es lunes
                 lunes.append(fecha_inicio.strftime("%d/%m/%Y")) 
-           
             fecha_inicio += timedelta(days=1)
 
-       
         if lunes:
             print("Lunes encontrados en el rango:")
             for lunes_fecha in lunes:
@@ -51,10 +43,7 @@ def op2():
     dt = datetime.strptime(str(x_int), '%Y%m%d%H%M%S')
     print('DateTime es:', dt)
 
-   
     print("Hora es:", dt.strftime("%d-%b-%Y %I.%M %p"))
-
-   
     print("Hora es:", dt.time().strftime("%H.%M %p"))
 
 def fecha():
@@ -63,7 +52,6 @@ def fecha():
     formato = "%d/%m/%Y"
 
     try:
-       
         fecha = datetime.strptime(entrada, formato)
         print("Fecha ingresada:", fecha.date()) 
         return fecha
@@ -114,7 +102,7 @@ def main():
                 continue
             op3(entrada1.strftime("%d/%m/%Y"), entrada2.strftime("%d/%m/%Y"))
         elif op == 7:
-            print("Adiós ;)")
+            print("Adiós ;)")  
             break  
         else:
             print("Opción no válida. Intente de nuevo.")

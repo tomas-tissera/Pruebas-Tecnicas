@@ -8,12 +8,14 @@ x, y = width // 2, height // 2
 
 def create_area():
     return [['.' for _ in range(width)] for _ in range(height)]
+
 def display_area(area, x, y):
     os.system('cls' if os.name == 'nt' else 'clear') 
     area[y][x] = 'X'  
     for row in area:
         print(' '.join(row))
     area[y][x] = '.' 
+
 def op3(num_steps):
     global x, y
     area = create_area()
@@ -22,12 +24,11 @@ def op3(num_steps):
         display_area(area, x, y)
         time.sleep(0.1) 
         
-        
         move = random.choice([(0, 1), (0, -1), (1, 0), (-1, 0)])  
         x += move[0]
         y += move[1]
         
-        
+        # Keep the walker within the boundaries of the area
         x = max(0, min(width - 1, x))
         y = max(0, min(height - 1, y))
 
@@ -45,20 +46,15 @@ def op1(cadena):
     if n == 0:
         return 0
 
-    
     ultimo_indice = {}
     max_longitud = 0
     inicio = 0
 
     for i in range(n):
         if cadena[i] in ultimo_indice and ultimo_indice[cadena[i]] >= inicio:
-            
             inicio = ultimo_indice[cadena[i]] + 1
-
         
         ultimo_indice[cadena[i]] = i
-
-        
         max_longitud = max(max_longitud, i - inicio + 1)
 
     return max_longitud
@@ -67,7 +63,7 @@ def main():
     while True:
         print("\n\n1. Implementa el algoritmo de búsqueda de la **subcadena más larga** que no se repite en una cadena dada.")
         print("2. Escribe una función que resuelva el problema del **cambio de monedas**: dado un valor en centavos y una lista de denominaciones de monedas, encuentra la mínima cantidad de monedas necesarias para hacer el cambio.")
-        print("3. caminante borracho (random walk).")
+        print("3. Caminante borracho (random walk).")
         print("7. Salir")
         
         try:
@@ -77,22 +73,27 @@ def main():
             continue 
 
         if op == 1:
-            cadena = "abcabcbb"
+            cadena = input("Ingrese una cadena para buscar la subcadena más larga sin repetir:\n-> ")
             resultado = op1(cadena)
             print("La longitud de la subcadena más larga sin repetir es:", resultado)
         elif op == 2:
-            print("Listado de Monedas:")
-            denominaciones = [1, 5, 10, 25]  
-            valor = int(input("Ingrese la Cantidad que posee:"))
-            resultado = op2(valor, denominaciones)
-            print(f"El mínimo número de monedas necesarias para {valor} centavos es: {resultado}")
-
+            print("Listado de Monedas:", [1, 5, 10, 25])  
+            valor = int(input("Ingrese la Cantidad que posee en centavos: "))
+            resultado = op2(valor, [1, 5, 10, 25])
+            if resultado == -1:
+                print(f"No se puede hacer cambio para {valor} centavos con las denominaciones disponibles.")
+            else:
+                print(f"El mínimo número de monedas necesarias para {valor} centavos es: {resultado}")
         elif op == 3:
-            
-            num_steps = int(input("Ingrese la Cantidad de pasos:\n->"))
-            op3(num_steps)
+            try:
+                num_steps = int(input("Ingrese la cantidad de pasos (un número positivo):\n-> "))
+                if num_steps < 0:
+                    raise ValueError("La cantidad de pasos debe ser un número positivo.")
+                op3(num_steps)
+            except ValueError as e:
+                print(f"Error: {e}")
         elif op == 7:
-            print("Adiós ;)")
+            print("Adiós ;)")  
             break  
         else:
             print("Opción no válida. Intente de nuevo.")
